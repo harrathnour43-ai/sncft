@@ -1,0 +1,173 @@
+<div class="modal-overlay" [class.active]="isVisible" (click)="onOverlayClick($event)">
+  <div class="modal-container" [class.active]="isVisible" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">{{ title }}</h2>
+      <button class="modal-close" (click)="onClose()" aria-label="Close modal">
+        <span class="close-icon">×</span>
+      </button>
+    </div>
+    
+    <div class="modal-content" [scrollTop]="scrollPosition">
+      <div class="modal-body" *ngIf="type === 'terms'">
+        <div class="section">
+          <h3>1. Acceptance of Terms</h3>
+          <p>By accessing and using SNCFT services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+        </div>
+        
+        <div class="section">
+          <h3>2. Description of Service</h3>
+          <p>SNCFT (Société Nationale des Chemins de Fer Tunisiens) provides railway transportation services including passenger transport, freight services, and related travel information through our digital platforms.</p>
+        </div>
+        
+        <div class="section">
+          <h3>3. User Registration</h3>
+          <p>To access certain features of our service, you must register for an account. You agree to provide accurate, current, and complete information as prompted by our registration form. You are responsible for maintaining the confidentiality of your account credentials.</p>
+        </div>
+        
+        <div class="section">
+          <h3>4. Ticket Purchase and Payment</h3>
+          <p>When purchasing tickets through our platform, you agree to provide valid payment information. All transactions are processed securely. Tickets are non-refundable unless specified otherwise in our refund policy.</p>
+        </div>
+        
+        <div class="section">
+          <h3>5. User Conduct</h3>
+          <p>You agree not to use our service for any unlawful purposes or in any way that could damage, disable, or impair the service. You must not attempt to gain unauthorized access to our systems.</p>
+        </div>
+        
+        <div class="section">
+          <h3>6. Privacy and Data Protection</h3>
+          <p>Your privacy is important to us. Please refer to our Privacy Policy for detailed information on how we collect, use, and protect your personal data.</p>
+        </div>
+        
+        <div class="section">
+          <h3>7. Service Availability</h3>
+          <p>While we strive to provide uninterrupted service, we cannot guarantee 100% availability. Railway services may be affected by weather, maintenance, or other unforeseen circumstances.</p>
+        </div>
+        
+        <div class="section">
+          <h3>8. Limitation of Liability</h3>
+          <p>SNCFT shall not be liable for any indirect, incidental, special, or consequential damages resulting from your use of our services, including but not limited to travel delays or service interruptions.</p>
+        </div>
+        
+        <div class="section">
+          <h3>9. Changes to Terms</h3>
+          <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting. Your continued use of the service constitutes acceptance of any changes.</p>
+        </div>
+        
+        <div class="section">
+          <h3>10. Contact Information</h3>
+          <p>For questions about these Terms of Service, please contact us at:</p>
+          <p><strong>Email:</strong> support@sncft.tn<br>
+          <strong>Phone:</strong> +216 71 123 456<br>
+          <strong>Address:</strong> Place de Barcelone, Tunis 1000, Tunisia</p>
+        </div>
+        
+        <div class="section">
+          <h3>11. Governing Law</h3>
+          <p>These terms are governed by and construed in accordance with the laws of the Republic of Tunisia.</p>
+        </div>
+      </div>
+      
+      <div class="modal-body" *ngIf="type === 'privacy'">
+        <div class="section">
+          <h3>1. Information We Collect</h3>
+          <p>We collect information you provide directly to us, such as when you create an account, purchase tickets, or contact us for support. This may include:</p>
+          <ul>
+            <li>Personal identification information (name, email, phone number)</li>
+            <li>Payment information (processed securely through third-party providers)</li>
+            <li>Travel preferences and booking history</li>
+            <li>Device and usage information</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>2. How We Use Your Information</h3>
+          <p>We use the information we collect to:</p>
+          <ul>
+            <li>Provide and maintain our railway transportation services</li>
+            <li>Process transactions and send booking confirmations</li>
+            <li>Send you technical notices and support messages</li>
+            <li>Improve our services and develop new features</li>
+            <li>Communicate with you about service updates and offers</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>3. Information Sharing</h3>
+          <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except in the following circumstances:</p>
+          <ul>
+            <li>Payment processors for transaction processing</li>
+            <li>Government authorities when required by law</li>
+            <li>Service providers who assist in operating our platform</li>
+            <li>In connection with a business transfer or merger</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>4. Data Security</h3>
+          <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. All payment information is encrypted using industry-standard protocols.</p>
+        </div>
+        
+        <div class="section">
+          <h3>5. Cookies and Tracking</h3>
+          <p>We use cookies and similar tracking technologies to enhance your experience, analyze usage patterns, and personalize content. You can control cookie settings through your browser preferences.</p>
+        </div>
+        
+        <div class="section">
+          <h3>6. Your Rights</h3>
+          <p>Under Tunisian data protection law, you have the right to:</p>
+          <ul>
+            <li>Access your personal information</li>
+            <li>Correct inaccurate information</li>
+            <li>Request deletion of your data</li>
+            <li>Object to processing of your information</li>
+            <li>Data portability</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h3>7. Data Retention</h3>
+          <p>We retain your personal information only as long as necessary to provide our services and comply with legal obligations. Booking records are retained for the period required by transportation regulations.</p>
+        </div>
+        
+        <div class="section">
+          <h3>8. International Data Transfers</h3>
+          <p>Your information may be transferred to and processed in countries other than Tunisia. We ensure appropriate safeguards are in place to protect your data in accordance with applicable data protection laws.</p>
+        </div>
+        
+        <div class="section">
+          <h3>9. Children's Privacy</h3>
+          <p>Our services are not intended for children under 16. We do not knowingly collect personal information from children under 16. If we become aware of such collection, we will take steps to delete the information.</p>
+        </div>
+        
+        <div class="section">
+          <h3>10. Changes to Privacy Policy</h3>
+          <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.</p>
+        </div>
+        
+        <div class="section">
+          <h3>11. Contact Information</h3>
+          <p>For privacy-related inquiries, please contact our Data Protection Officer at:</p>
+          <p><strong>Email:</strong> privacy@sncft.tn<br>
+          <strong>Phone:</strong> +216 71 123 456<br>
+          <strong>Address:</strong> Place de Barcelone, Tunis 1000, Tunisia</p>
+        </div>
+        
+        <div class="section">
+          <h3>12. Legal Basis for Processing</h3>
+          <p>We process your personal data based on:</p>
+          <ul>
+            <li>Contractual necessity for providing our services</li>
+            <li>Legal obligations under transportation and data protection laws</li>
+            <li>Legitimate interests in improving our services</li>
+            <li>Your consent where required by law</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="modal-action-btn" (click)="onClose()">I Understand</button>
+    </div>
+  </div>
+</div>

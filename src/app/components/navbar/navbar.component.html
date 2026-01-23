@@ -1,0 +1,63 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <a routerLink="/" class="logo-text">
+        <span class="logo-icon">🚆</span>
+        <span class="logo-brand">SNCFT</span>
+      </a>
+    </div>
+    
+    <div class="nav-menu" [class.active]="isMenuOpen">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a routerLink="/" class="nav-link">{{ translations.home }}</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/about" class="nav-link">{{ translations.about }}</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/horaires" class="nav-link">{{ translations.schedules }}</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/booking" class="nav-link" [class.active]="isRouteActive('/booking')">{{ translations.booking }}</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/contact" class="nav-link">{{ translations.contact }}</a>
+        </li>
+      </ul>
+      
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <div class="language-switcher" [class.active]="isLanguageDropdownOpen" (click)="toggleLanguageDropdown($event)">
+          <span class="current-lang">{{ currentLanguageFlag }} {{ currentLanguageName }}</span>
+          <span class="lang-arrow">▼</span>
+          <div class="lang-dropdown">
+            <div class="lang-option" [class.active]="currentLanguage === 'en'" (click)="changeLanguage('en')">
+              <span class="flag">🇬🇧</span>
+              <span class="lang-name">English</span>
+            </div>
+            <div class="lang-option" [class.active]="currentLanguage === 'fr'" (click)="changeLanguage('fr')">
+              <span class="flag">🇫🇷</span>
+              <span class="lang-name">Français</span>
+            </div>
+            <div class="lang-option" [class.active]="currentLanguage === 'ar'" (click)="changeLanguage('ar')">
+              <span class="flag">🇹🇳</span>
+              <span class="lang-name">العربية</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="nav-cta">
+          <a href="/login" class="login-button">{{ translations.login }}</a>
+          <a href="/register" class="register-button">{{ translations.register }}</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="nav-toggle" [class.active]="isMenuOpen" (click)="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </div>
+</nav>

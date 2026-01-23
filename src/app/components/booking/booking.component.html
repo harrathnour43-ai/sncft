@@ -1,0 +1,243 @@
+<div class="booking-container">
+  <div class="booking-hero">
+    <div class="booking-hero-content">
+      <h1>Book Your Journey</h1>
+      <p>Reserve your seat with SNCFT - Tunisia's national railway service</p>
+    </div>
+  </div>
+
+  <div class="booking-main">
+    <div class="container">
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="search-card">
+          <h2>Search Trains</h2>
+          <form class="search-form" (ngSubmit)="searchTrains()">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="from">From</label>
+                <select id="from" [(ngModel)]="bookingData.from" name="from" required>
+                  <option value="">Select departure city</option>
+                  <option value="tunis">Tunis</option>
+                  <option value="sfax">Sfax</option>
+                  <option value="sousse">Sousse</option>
+                  <option value="monastir">Monastir</option>
+                  <option value="bizerte">Bizerte</option>
+                  <option value="gabes">Gabès</option>
+                  <option value="tozeur">Tozeur</option>
+                  <option value="djerba">Djerba</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="to">To</label>
+                <select id="to" [(ngModel)]="bookingData.to" name="to" required>
+                  <option value="">Select arrival city</option>
+                  <option value="tunis">Tunis</option>
+                  <option value="sfax">Sfax</option>
+                  <option value="sousse">Sousse</option>
+                  <option value="monastir">Monastir</option>
+                  <option value="bizerte">Bizerte</option>
+                  <option value="gabes">Gabès</option>
+                  <option value="tozeur">Tozeur</option>
+                  <option value="djerba">Djerba</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="departureDate">Departure Date</label>
+                <input type="date" id="departureDate" [(ngModel)]="bookingData.departureDate" name="departureDate" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="returnDate">Return Date</label>
+                <input type="date" id="returnDate" [(ngModel)]="bookingData.returnDate" name="returnDate">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="passengers">Passengers</label>
+                <select id="passengers" [(ngModel)]="bookingData.passengers" name="passengers" required>
+                  <option value="1">1 Passenger</option>
+                  <option value="2">2 Passengers</option>
+                  <option value="3">3 Passengers</option>
+                  <option value="4">4 Passengers</option>
+                  <option value="5">5 Passengers</option>
+                  <option value="6">6 Passengers</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="class">Class</label>
+                <select id="class" [(ngModel)]="bookingData.class" name="class" required>
+                  <option value="economy">Economy</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn-search">
+                <span class="btn-icon">🔍</span>
+                Search Trains
+              </button>
+              <button type="button" class="btn-reset" (click)="resetForm()">
+                <span class="btn-icon">🔄</span>
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Search Results Section -->
+      <section class="results-section" *ngIf="searchResults.length > 0">
+        <h2>Available Trains</h2>
+        <div class="train-results">
+          <div class="train-card" *ngFor="let train of searchResults" (click)="selectTrain(train)">
+            <div class="train-header">
+              <div class="train-info">
+                <h3>{{ train.trainNumber }}</h3>
+                <span class="train-type">{{ train.type }}</span>
+              </div>
+              <div class="train-price">
+                <span class="price">{{ train.price }} TND</span>
+                <span class="price-per-person">per person</span>
+              </div>
+            </div>
+            
+            <div class="train-route">
+              <div class="departure">
+                <span class="time">{{ train.departureTime }}</span>
+                <span class="city">{{ train.from }}</span>
+                <span class="date">{{ train.departureDate }}</span>
+              </div>
+              
+              <div class="route-info">
+                <div class="duration">{{ train.duration }}</div>
+                <div class="route-line"></div>
+              </div>
+              
+              <div class="arrival">
+                <span class="time">{{ train.arrivalTime }}</span>
+                <span class="city">{{ train.to }}</span>
+                <span class="date">{{ train.arrivalDate }}</span>
+              </div>
+            </div>
+            
+            <div class="train-features">
+              <span class="feature" *ngFor="let feature of train.features">
+                {{ feature }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking Form Section -->
+      <section class="booking-form-section" *ngIf="selectedTrain">
+        <div class="booking-form-card">
+          <h2>Complete Your Booking</h2>
+          <form class="booking-form" (ngSubmit)="confirmBooking()">
+            <div class="selected-train-summary">
+              <h3>Selected Train</h3>
+              <div class="summary-item">
+                <span>Train:</span>
+                <span>{{ selectedTrain.trainNumber }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Route:</span>
+                <span>{{ selectedTrain.from }} → {{ selectedTrain.to }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Date:</span>
+                <span>{{ bookingData.departureDate }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Class:</span>
+                <span>{{ selectedTrain.class }}</span>
+              </div>
+            </div>
+
+            <div class="passenger-details">
+              <h3>Passenger Details</h3>
+              <div class="passenger-form" *ngFor="let passenger of passengers; let i = index">
+                <h4>Passenger {{ i + 1 }}</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label [for]="'firstName' + i">First Name</label>
+                    <input [id]="'firstName' + i" type="text" [(ngModel)]="passenger.firstName" [name]="'firstName' + i" required>
+                  </div>
+                  <div class="form-group">
+                    <label [for]="'lastName' + i">Last Name</label>
+                    <input [id]="'lastName' + i" type="text" [(ngModel)]="passenger.lastName" [name]="'lastName' + i" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label [for]="'email' + i">Email</label>
+                    <input [id]="'email' + i" type="email" [(ngModel)]="passenger.email" [name]="'email' + i" required>
+                  </div>
+                  <div class="form-group">
+                    <label [for]="'phone' + i">Phone</label>
+                    <input [id]="'phone' + i" type="tel" [(ngModel)]="passenger.phone" [name]="'phone' + i" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-section">
+              <h3>Payment Method</h3>
+              <div class="payment-options">
+                <label class="payment-option">
+                  <input type="radio" name="payment" value="credit" [(ngModel)]="bookingData.paymentMethod" required>
+                  <span class="radio-label">Credit Card</span>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="payment" value="debit" [(ngModel)]="bookingData.paymentMethod" required>
+                  <span class="radio-label">Debit Card</span>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="payment" value="cash" [(ngModel)]="bookingData.paymentMethod" required>
+                  <span class="radio-label">Cash at Station</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="booking-summary">
+              <div class="summary-row">
+                <span>Base Price:</span>
+                <span>{{ selectedTrain.price }} TND</span>
+              </div>
+              <div class="summary-row">
+                <span>Passengers:</span>
+                <span>{{ bookingData.passengers }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Subtotal:</span>
+                <span>{{ selectedTrain.price * bookingData.passengers }} TND</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total:</span>
+                <span>{{ selectedTrain.price * bookingData.passengers }} TND</span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-confirm">
+                <span class="btn-icon">✓</span>
+                Confirm Booking
+              </button>
+              <button type="button" class="btn-cancel" (click)="cancelBooking()">
+                <span class="btn-icon">✕</span>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

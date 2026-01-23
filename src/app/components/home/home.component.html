@@ -1,0 +1,156 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-slider">
+      <div class="slide active">
+        <div class="slide-background" style="background-image: url('assets/photos/sncft.jpg');">
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <h1>Welcome to SNCFT</h1>
+            <p>Your gateway to comfortable and reliable railway travel across Tunisia</p>
+            <div class="slide-cta">
+              <button class="cta-primary" (click)="navigateToBooking()">Book a Ticket</button>
+              <button class="cta-secondary" (click)="navigateToSchedules()">View Schedules</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide">
+        <div class="slide-background" style="background-image: url('assets/photos/gare2.jpg');">
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <h1>Modern Stations</h1>
+            <p>Experience our newly renovated stations with modern amenities and comfortable facilities</p>
+            <div class="slide-cta">
+              <button class="cta-primary" (click)="navigateToBooking()">Book Now</button>
+              <button class="cta-secondary" (click)="navigateToSchedules()">Check Routes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slide">
+        <div class="slide-background" style="background-image: url('assets/photos/train4.jpg');">
+          <div class="slide-overlay"></div>
+        </div>
+        <div class="slide-content">
+          <div class="slide-text">
+            <h1>Explore Tunisia</h1>
+            <p>Connect to major cities and discover the beauty of our country by rail</p>
+            <div class="slide-cta">
+              <button class="cta-primary" (click)="navigateToBooking()">Plan Journey</button>
+              <button class="cta-secondary" (click)="navigateToSchedules()">View Routes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Slider Controls -->
+      <div class="slider-controls">
+        <button class="slider-btn prev" (click)="previousSlide()" aria-label="Previous slide">
+          <span>‹</span>
+        </button>
+        <div class="slider-dots">
+          <span class="dot" [class.active]="currentSlide === 0" (click)="goToSlide(0)"></span>
+          <span class="dot" [class.active]="currentSlide === 1" (click)="goToSlide(1)"></span>
+          <span class="dot" [class.active]="currentSlide === 2" (click)="goToSlide(2)"></span>
+        </div>
+        <button class="slider-btn next" (click)="nextSlide()" aria-label="Next slide">
+          <span>›</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Experience SNCFT</h2>
+        <p>Discover our modern fleet and exceptional services</p>
+      </div>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <div class="video-embed">
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="https://www.youtube.com/embed/Ta3_rkx1Bek" 
+              title="SNCFT - Connecting Tunisia" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              class="youtube-iframe">
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h3>SNCFT: Connecting Tunisia</h3>
+            <p>Join us on a journey through Tunisia's modern railway network, featuring our state-of-the-art trains and exceptional service.</p>
+            <div class="video-meta">
+              <span class="video-duration">Official SNCFT Video</span>
+              <span class="video-views">Promotional Content</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest News Section -->
+  <section class="news-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Latest News</h2>
+        <a href="#" class="view-all">View All News</a>
+      </div>
+      <div class="news-grid">
+        <article class="news-card">
+          <div class="news-image" style="background-image: url('assets/photos/tr.jpg');">
+          </div>
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-date">March 15, 2024</span>
+              <span class="news-category">Fleet Update</span>
+            </div>
+            <h3 class="news-title">New High-Speed Trains Join SNCFT Fleet</h3>
+            <p class="news-excerpt">SNCFT announces the addition of modern high-speed trains to enhance passenger comfort and reduce travel times between major cities.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+        
+        <article class="news-card">
+          <div class="news-image" style="background-image: url('assets/photos/Gare.jpg');">
+          </div>
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-date">March 12, 2024</span>
+              <span class="news-category">Infrastructure</span>
+            </div>
+            <h3 class="news-title">Tunis Central Station Modernization Complete</h3>
+            <p class="news-excerpt">Major renovation of Tunis Central Station concludes, offering passengers improved facilities and modern amenities.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+        
+        <article class="news-card">
+          <div class="news-image" style="background-image: url('assets/photos/train4.jpg');">
+          </div>
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-date">March 10, 2024</span>
+              <span class="news-category">Service</span>
+            </div>
+            <h3 class="news-title">Expanded Service to Southern Regions</h3>
+            <p class="news-excerpt">SNCFT launches new routes connecting southern cities with improved schedules and enhanced passenger services.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
