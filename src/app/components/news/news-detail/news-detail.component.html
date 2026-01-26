@@ -1,0 +1,92 @@
+<div class="news-detail-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading article...</p>
+  </div>
+
+  <!-- Article Content -->
+  <div *ngIf="!loading && newsArticle" class="news-article">
+    <!-- Header -->
+    <header class="article-header">
+      <div class="container">
+        <button class="back-button" (click)="goBack()">
+          <span class="back-icon">←</span>
+          Back to News
+        </button>
+        
+        <div class="article-meta">
+          <span class="article-category">{{ newsArticle!.category }}</span>
+          <span class="article-date">{{ newsArticle!.date }}</span>
+        </div>
+        
+        <h1 class="article-title">{{ newsArticle!.title }}</h1>
+        
+        <div class="article-author">
+          <span>By {{ newsArticle!.author }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Image -->
+    <section class="featured-image">
+      <div class="container">
+        <img [src]="newsArticle!.image" [alt]="newsArticle!.title" class="main-image">
+      </div>
+    </section>
+
+    <!-- Article Body -->
+    <main class="article-body">
+      <div class="container">
+        <div class="article-content" [innerHTML]="newsArticle!.content"></div>
+        
+        <!-- Share Section -->
+        <section class="share-section">
+          <h3>Share this article</h3>
+          <div class="share-buttons">
+            <button class="share-btn facebook">
+              <span class="share-icon">📘</span>
+              Facebook
+            </button>
+            <button class="share-btn twitter">
+              <span class="share-icon">🐦</span>
+              Twitter
+            </button>
+            <button class="share-btn linkedin">
+              <span class="share-icon">💼</span>
+              LinkedIn
+            </button>
+            <button class="share-btn whatsapp">
+              <span class="share-icon">📱</span>
+              WhatsApp
+            </button>
+          </div>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="related-articles">
+          <h3>Related Articles</h3>
+          <div class="related-grid">
+            <article class="related-card" *ngFor="let article of getRelatedArticles()" (click)="readMore(article.id)">
+              <img [src]="article.image" [alt]="article.title" class="related-image">
+              <div class="related-content">
+                <span class="related-category">{{ article.category }}</span>
+                <h4 class="related-title">{{ article.title }}</h4>
+                <span class="related-date">{{ article.date }}</span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Not Found State -->
+  <div *ngIf="!loading && !newsArticle" class="not-found">
+    <div class="container">
+      <h2>Article Not Found</h2>
+      <p>The article you're looking for doesn't exist or has been removed.</p>
+      <button class="back-button" (click)="goBack()">Back to News</button>
+    </div>
+  </div>
+</div>

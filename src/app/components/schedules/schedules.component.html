@@ -1,0 +1,197 @@
+<div class="schedules-container">
+  <!-- Header Section -->
+  <div class="schedules-header">
+    <div class="container">
+      <h1 class="page-title">{{ translations.schedules }}</h1>
+      <p class="page-subtitle">{{ translations.schedulesSubtitle }}</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="schedules-main">
+    <div class="container">
+      <!-- Section Tabs -->
+      <div class="section-tabs">
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'longDistance'"
+          (click)="switchTab('longDistance')">
+          <span class="tab-icon">🚄</span>
+          {{ translations.longDistanceLines }}
+        </button>
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'suburban'"
+          (click)="switchTab('suburban')">
+          <span class="tab-icon">🚊</span>
+          {{ translations.tunisSuburbanLines }}
+        </button>
+      </div>
+
+      <!-- Long-Distance Lines Section -->
+      <div class="section-content" [class.active]="activeTab === 'longDistance'">
+        <div class="section-header">
+          <h2>{{ translations.longDistanceLines }}</h2>
+          <p>{{ translations.longDistanceDescription }}</p>
+        </div>
+
+        <!-- Filter Options -->
+        <div class="filter-section">
+          <div class="filter-group">
+            <label>{{ translations.departureCity }}:</label>
+            <select [(ngModel)]="selectedDepartureCity" (change)="filterLongDistanceTrains()">
+              <option value="">{{ translations.allCities }}</option>
+              <option *ngFor="let city of departureCities" [value]="city">{{ city }}</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>{{ translations.arrivalCity }}:</label>
+            <select [(ngModel)]="selectedArrivalCity" (change)="filterLongDistanceTrains()">
+              <option value="">{{ translations.allCities }}</option>
+              <option *ngFor="let city of arrivalCities" [value]="city">{{ city }}</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>{{ translations.trainType }}:</label>
+            <select [(ngModel)]="selectedTrainType" (change)="filterLongDistanceTrains()">
+              <option value="">{{ translations.allTypes }}</option>
+              <option *ngFor="let type of trainTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Long-Distance Trains Grid -->
+        <div class="trains-grid">
+          <div 
+            *ngFor="let train of filteredLongDistanceTrains" 
+            class="train-card long-distance">
+            <div class="train-header">
+              <div class="train-type">
+                <span class="type-icon">{{ getTrainIcon(train.type) }}</span>
+                <span class="type-name">{{ train.type }}</span>
+              </div>
+              <div class="train-number">{{ train.number }}</div>
+            </div>
+            
+            <div class="train-route">
+              <div class="route-item departure">
+                <div class="city">{{ train.departureCity }}</div>
+                <div class="time">{{ train.departureTime }}</div>
+                <div class="station">{{ train.departureStation }}</div>
+              </div>
+              
+              <div class="route-arrow">
+                <span class="arrow">→</span>
+                <div class="duration">{{ train.duration }}</div>
+              </div>
+              
+              <div class="route-item arrival">
+                <div class="city">{{ train.arrivalCity }}</div>
+                <div class="time">{{ train.arrivalTime }}</div>
+                <div class="station">{{ train.arrivalStation }}</div>
+              </div>
+            </div>
+            
+            <div class="train-footer">
+              <div class="days-of-operation">
+                <span class="days-label">{{ translations.days }}:</span>
+                <div class="days-pills">
+                  <span 
+                    *ngFor="let day of train.days" 
+                    class="day-pill"
+                    [class.active]="day.active">
+                    {{ day.name }}
+                  </span>
+                </div>
+              </div>
+              <button class="details-btn" (click)="showTrainDetails(train)">
+                {{ translations.details }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tunis Suburban Lines Section -->
+      <div class="section-content" [class.active]="activeTab === 'suburban'">
+        <div class="section-header">
+          <h2>{{ translations.tunisSuburbanLines }}</h2>
+          <p>{{ translations.suburbanDescription }}</p>
+        </div>
+
+        <!-- Suburban Lines Grid -->
+        <div class="suburban-grid">
+          <div 
+            *ngFor="let line of suburbanLines" 
+            class="line-card suburban">
+            <div class="line-header">
+              <div class="line-info">
+                <div class="line-number">{{ line.lineNumber }}</div>
+                <div class="line-name">{{ line.name }}</div>
+              </div>
+              <div class="line-color" [style.background-color]="line.color"></div>
+            </div>
+            
+            <div class="line-route">
+              <div class="route-terminus">
+                <div class="terminus-item">
+                  <span class="terminus-label">{{ translations.north }}</span>
+                  <span class="terminus-name">{{ line.northTerminus }}</span>
+                </div>
+                <div class="terminus-item">
+                  <span class="terminus-label">{{ translations.south }}</span>
+                  <span class="terminus-name">{{ line.southTerminus }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="line-schedule">
+              <div class="schedule-item">
+                <span class="schedule-label">{{ translations.firstTrain }}:</span>
+                <span class="schedule-time">{{ line.firstTrain }}</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-label">{{ translations.lastTrain }}:</span>
+                <span class="schedule-time">{{ line.lastTrain }}</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-label">{{ translations.frequency }}:</span>
+                <span class="schedule-frequency">{{ line.frequency }}</span>
+              </div>
+            </div>
+            
+            <div class="line-footer">
+              <div class="days-of-service">
+                <span class="days-label">{{ translations.serviceDays }}:</span>
+                <div class="days-pills">
+                  <span 
+                    *ngFor="let day of line.serviceDays" 
+                    class="day-pill"
+                    [class.active]="day.active">
+                    {{ day.name }}
+                  </span>
+                </div>
+              </div>
+              <button class="details-btn" (click)="showLineDetails(line)">
+                {{ translations.details }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Train Details Modal -->
+  <div class="modal-overlay" [class.active]="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ modalTitle }}</h3>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div [innerHTML]="modalContent"></div>
+      </div>
+    </div>
+  </div>
+</div>

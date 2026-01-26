@@ -1,0 +1,75 @@
+<div class="news-list-container">
+  <!-- Header -->
+  <header class="news-header">
+    <div class="container">
+      <button class="back-button" (click)="goBack()">
+        <span class="back-icon">←</span>
+        Back to Home
+      </button>
+      
+      <h1 class="page-title">SNCFT News & Updates</h1>
+      <p class="page-subtitle">Stay informed about the latest developments in Tunisia's railway network</p>
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading news articles...</p>
+  </div>
+
+  <!-- News Content -->
+  <div *ngIf="!loading" class="news-content">
+    <div class="container">
+      <!-- Category Filter -->
+      <section class="category-filter">
+        <h3>Filter by Category</h3>
+        <div class="filter-buttons">
+          <button 
+            *ngFor="let category of getCategories()" 
+            class="filter-btn"
+            [class.active]="selectedCategory === category"
+            (click)="filterByCategory(category)">
+            {{ category === 'all' ? 'All News' : category }}
+          </button>
+        </div>
+      </section>
+
+      <!-- News Grid -->
+      <section class="news-grid">
+        <article 
+          *ngFor="let article of getFilteredArticles()" 
+          class="news-card"
+          (click)="readMore(article.id)">
+          <div class="news-image">
+            <img [src]="article.image" [alt]="article.title">
+            <div class="news-overlay"></div>
+          </div>
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-category">{{ article.category }}</span>
+              <span class="news-date">{{ article.date }}</span>
+            </div>
+            <h3 class="news-title">{{ article.title }}</h3>
+            <p class="news-excerpt">{{ article.excerpt }}</p>
+            <div class="news-footer">
+              <span class="news-author">By {{ article.author }}</span>
+              <button class="read-more-btn">
+                Read More →
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- No Results -->
+      <div *ngIf="getFilteredArticles().length === 0" class="no-results">
+        <h3>No articles found</h3>
+        <p>There are no articles in the "{{ selectedCategory }}" category.</p>
+        <button class="filter-btn active" (click)="filterByCategory('all')">
+          Show All News
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

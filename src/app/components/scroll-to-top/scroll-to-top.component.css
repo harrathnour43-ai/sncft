@@ -1,0 +1,88 @@
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background: #ff0000; /* Changed to red for better visibility during testing */
+  color: white;
+  border: 3px solid #ffffff; /* Added white border for visibility */
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6); /* Red shadow for visibility */
+  z-index: 99999; /* Very high z-index to ensure it's on top */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  pointer-events: auto; /* Ensure it's clickable */
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+}
+
+.scroll-to-top-btn:hover {
+  background: #cc0000;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 0, 0, 0.8);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.6);
+}
+
+.scroll-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  line-height: 1;
+}
+
+.scroll-to-top-btn:hover .scroll-icon {
+  transform: translateY(-2px);
+}
+
+/* Ensure button is always on top */
+.scroll-to-top-btn * {
+  pointer-events: none; /* Prevent child elements from blocking clicks */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scroll-to-top-btn {
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-to-top-btn {
+    bottom: 15px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+}
+
+/* Accessibility focus styles */
+.scroll-to-top-btn:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}

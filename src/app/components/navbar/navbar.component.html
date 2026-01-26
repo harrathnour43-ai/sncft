@@ -2,7 +2,9 @@
   <div class="nav-container">
     <div class="nav-logo">
       <a routerLink="/" class="logo-text">
-        <span class="logo-icon">🚆</span>
+        <div class="logo-icon">
+          <img src="../../../assets/photos/logo.jpg" alt="SNCFT Logo" class="logo-image">
+        </div>
         <span class="logo-brand">SNCFT</span>
       </a>
     </div>
@@ -10,19 +12,19 @@
     <div class="nav-menu" [class.active]="isMenuOpen">
       <ul class="nav-list">
         <li class="nav-item">
-          <a routerLink="/" class="nav-link">{{ translations.home }}</a>
+          <a routerLink="/" class="nav-link" [class.active]="isRouteActive('/')">{{ translations.home }}</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/about" class="nav-link">{{ translations.about }}</a>
+          <a routerLink="/about" class="nav-link" [class.active]="isRouteActive('/about')">{{ translations.about }}</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/horaires" class="nav-link">{{ translations.schedules }}</a>
+          <a routerLink="/schedules" class="nav-link" [class.active]="isRouteActive('/schedules')">{{ translations.schedules }}</a>
         </li>
         <li class="nav-item">
           <a routerLink="/booking" class="nav-link" [class.active]="isRouteActive('/booking')">{{ translations.booking }}</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/contact" class="nav-link">{{ translations.contact }}</a>
+          <a routerLink="/contact" class="nav-link" [class.active]="isRouteActive('/contact')">{{ translations.contact }}</a>
         </li>
       </ul>
       

@@ -241,3 +241,12 @@
     </div>
   </div>
 </div>
+
+<!-- Booking Confirmation Modal -->
+<app-modal 
+  [isVisible]="showBookingModal"
+  [type]="'booking-confirmation'"
+  [title]="'Booking Confirmation'"
+  [bookingData]="bookingConfirmationData"
+  (closeModalEvent)="closeBookingModal()">
+</app-modal>

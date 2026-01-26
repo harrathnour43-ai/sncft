@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BookingConfirmationData } from '../modal/modal.component';
 
 export interface BookingData {
   from: string;
@@ -53,6 +54,10 @@ export class BookingComponent implements OnInit {
   searchResults: Train[] = [];
   selectedTrain: Train | null = null;
   passengers: Passenger[] = [];
+  
+  // Modal properties
+  showBookingModal: boolean = false;
+  bookingConfirmationData: BookingConfirmationData | null = null;
 
   constructor(private router: Router) {}
 
@@ -154,30 +159,69 @@ export class BookingComponent implements OnInit {
   selectTrain(train: Train): void {
     this.selectedTrain = train;
     this.initializePassengers();
+    
+    // Scroll to the "Complete Your Booking" section
+    setTimeout(() => {
+      const bookingFormSection = document.querySelector('.booking-form-section');
+      if (bookingFormSection) {
+        bookingFormSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
+    }, 100);
   }
 
   confirmBooking(): void {
     if (!this.selectedTrain) {
-      alert('Please select a train');
+      this.showErrorModal('Please select a train');
       return;
     }
 
     // Validate passenger details
     for (let passenger of this.passengers) {
       if (!passenger.firstName || !passenger.lastName || !passenger.email || !passenger.phone) {
-        alert('Please fill in all passenger details');
+        this.showErrorModal('Please fill in all passenger details');
         return;
       }
     }
 
     if (!this.bookingData.paymentMethod) {
-      alert('Please select a payment method');
+      this.showErrorModal('Please select a payment method');
       return;
     }
 
-    // Mock booking confirmation - in real app, this would call an API
-    alert(`Booking confirmed! Train ${this.selectedTrain.trainNumber} from ${this.selectedTrain.from} to ${this.selectedTrain.to}. Total: ${this.selectedTrain.price * this.bookingData.passengers} TND`);
-    
+    // Generate booking confirmation data
+    this.bookingConfirmationData = {
+      trainNumber: this.selectedTrain.trainNumber,
+      from: this.selectedTrain.from,
+      to: this.selectedTrain.to,
+      departureDate: this.selectedTrain.departureDate,
+      departureTime: this.selectedTrain.departureTime,
+      arrivalTime: this.selectedTrain.arrivalTime,
+      passengers: this.bookingData.passengers,
+      totalPrice: this.selectedTrain.price * this.bookingData.passengers,
+      bookingReference: this.generateBookingReference(),
+      passengerNames: this.passengers.map(p => `${p.firstName} ${p.lastName}`)
+    };
+
+    // Show booking confirmation modal
+    this.showBookingModal = true;
+  }
+
+  showErrorModal(message: string): void {
+    // For now, use alert for error messages - could be enhanced with error modal
+    alert(message);
+  }
+
+  generateBookingReference(): string {
+    // Generate a random booking reference (e.g., SNCFT123456)
+    const random = Math.floor(Math.random() * 1000000);
+    return `SNCFT${random.toString().padStart(6, '0')}`;
+  }
+
+  closeBookingModal(): void {
+    this.showBookingModal = false;
     // Reset form after successful booking
     this.resetForm();
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -58,9 +59,14 @@ export class NavbarComponent implements OnInit {
     }
     this.updateDocumentDirection();
     
+    // Set initial route
+    this.currentRoute = this.router.url;
+    
     // Subscribe to route changes
-    this.router.events.subscribe(() => {
-      this.currentRoute = this.router.url;
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentRoute = event.urlAfterRedirects;
     });
   }
 
@@ -112,7 +118,15 @@ export class NavbarComponent implements OnInit {
   }
 
   isRouteActive(route: string): boolean {
-    return this.currentRoute === route || this.currentRoute.startsWith(route + '/');
+    // Handle home route specially
+    if (route === '/') {
+      return this.currentRoute === '/' || this.currentRoute === '' || this.currentRoute.startsWith('/?');
+    }
+    
+    // For other routes, check exact match or starts with route
+    return this.currentRoute === route || 
+           this.currentRoute.startsWith(route + '/') ||
+           (route !== '/' && this.currentRoute.startsWith(route));
   }
 
   // Close dropdowns when clicking outside

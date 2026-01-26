@@ -106,7 +106,7 @@
     <div class="container">
       <div class="section-header">
         <h2>Latest News</h2>
-        <a href="#" class="view-all">View All News</a>
+        <a href="#" class="view-all" (click)="viewAllNews($event)">View All News</a>
       </div>
       <div class="news-grid">
         <article class="news-card">
@@ -119,7 +119,7 @@
             </div>
             <h3 class="news-title">New High-Speed Trains Join SNCFT Fleet</h3>
             <p class="news-excerpt">SNCFT announces the addition of modern high-speed trains to enhance passenger comfort and reduce travel times between major cities.</p>
-            <a href="#" class="read-more">Read More →</a>
+            <a href="#" class="read-more" (click)="readMoreNews('high-speed-trains', $event)">Read More →</a>
           </div>
         </article>
         
@@ -133,7 +133,7 @@
             </div>
             <h3 class="news-title">Tunis Central Station Modernization Complete</h3>
             <p class="news-excerpt">Major renovation of Tunis Central Station concludes, offering passengers improved facilities and modern amenities.</p>
-            <a href="#" class="read-more">Read More →</a>
+            <a href="#" class="read-more" (click)="readMoreNews('tunis-station', $event)">Read More →</a>
           </div>
         </article>
         
@@ -147,7 +147,7 @@
             </div>
             <h3 class="news-title">Expanded Service to Southern Regions</h3>
             <p class="news-excerpt">SNCFT launches new routes connecting southern cities with improved schedules and enhanced passenger services.</p>
-            <a href="#" class="read-more">Read More →</a>
+            <a href="#" class="read-more" (click)="readMoreNews('southern-regions', $event)">Read More →</a>
           </div>
         </article>
       </div>

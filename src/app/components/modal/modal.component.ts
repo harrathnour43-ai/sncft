@@ -1,5 +1,29 @@
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 
+export interface BookingConfirmationData {
+  trainNumber: string;
+  from: string;
+  to: string;
+  departureDate: string;
+  departureTime: string;
+  arrivalTime: string;
+  passengers: number;
+  totalPrice: number;
+  bookingReference: string;
+  passengerNames: string[];
+}
+
+export interface ContactConfirmationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  submissionTime: string;
+  ticketNumber: string;
+}
+
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -7,8 +31,10 @@ import { Component, Input, Output, EventEmitter, HostListener } from '@angular/c
 })
 export class ModalComponent {
   @Input() isVisible: boolean = false;
-  @Input() type: 'terms' | 'privacy' = 'terms';
+  @Input() type: 'terms' | 'privacy' | 'booking-confirmation' | 'contact-confirmation' = 'terms';
   @Input() title: string = 'Terms of Service';
+  @Input() bookingData: BookingConfirmationData | null = null;
+  @Input() contactData: ContactConfirmationData | null = null;
   @Output() closeModalEvent = new EventEmitter<void>();
   
   scrollPosition: number = 0;

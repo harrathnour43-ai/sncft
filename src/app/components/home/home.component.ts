@@ -123,11 +123,40 @@ export class HomeComponent implements OnInit {
 
   // Navigation Methods
   navigateToBooking(): void {
-    this.router.navigate(['/booking']);
+    this.router.navigate(['/booking']).then(() => {
+      this.forceScrollToTop();
+    });
   }
 
   navigateToSchedules(): void {
-    this.router.navigate(['/horaires']);
+    this.router.navigate(['/horaires']).then(() => {
+      this.forceScrollToTop();
+    });
+  }
+
+  // News Methods
+  viewAllNews(event: Event): void {
+    event.preventDefault();
+    console.log('View All News clicked');
+    // Navigate to news list page
+    this.router.navigate(['/news']).then(() => {
+      this.forceScrollToTop();
+    });
+  }
+
+  readMoreNews(newsId: string, event: Event): void {
+    event.preventDefault();
+    console.log(`Read more news: ${newsId}`);
+    // Navigate to specific news article
+    this.router.navigate(['/news', newsId]).then(() => {
+      this.forceScrollToTop();
+    });
+  }
+
+  forceScrollToTop(): void {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 
   // Video Methods

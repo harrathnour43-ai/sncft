@@ -362,3 +362,534 @@
     display: none;
   }
 }
+
+/* Booking Confirmation Modal Styles */
+.booking-success {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.success-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.booking-success h3 {
+  color: #1a365d;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.booking-success p {
+  color: #6b7280;
+  font-size: 16px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.booking-details {
+  text-align: left;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+}
+
+.booking-summary {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.summary-header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #3182ce;
+}
+
+.summary-header h4 {
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.reference-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3182ce;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.journey-info {
+  margin-bottom: 25px;
+}
+
+.train-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.route-station {
+  text-align: center;
+  flex: 1;
+}
+
+.station-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a365d;
+  margin-bottom: 5px;
+}
+
+.station-time {
+  font-size: 20px;
+  font-weight: 600;
+  color: #3182ce;
+  margin-bottom: 3px;
+}
+
+.station-date {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.route-arrow {
+  font-size: 24px;
+  color: #3182ce;
+  font-weight: 700;
+  margin: 0 15px;
+}
+
+.train-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #f0f8ff;
+  border-radius: 6px;
+}
+
+.train-number {
+  font-weight: 600;
+  color: #1a365d;
+}
+
+.passenger-count {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.passenger-list {
+  margin-bottom: 20px;
+}
+
+.passenger-list h5 {
+  color: #1a365d;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.passenger-item {
+  background: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.passenger-name {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.price-summary {
+  background: #f0f8ff;
+  padding: 15px 20px;
+  border-radius: 6px;
+  border: 1px solid #3182ce;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3182ce;
+}
+
+.important-notes {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.important-notes h5 {
+  color: #856404;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.important-notes ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.important-notes li {
+  color: #856404;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.contact-info {
+  background: #d1ecf1;
+  border: 1px solid #17a2b8;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.contact-info h5 {
+  color: #0c5460;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.contact-info p {
+  color: #0c5460;
+  margin-bottom: 10px;
+}
+
+.contact-details {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contact-details span {
+  color: #0c5460;
+  font-weight: 500;
+}
+
+.booking-btn {
+  background: #3182ce !important;
+  color: white !important;
+  border: none !important;
+}
+
+.booking-btn:hover {
+  background: #2563eb !important;
+  transform: translateY(-2px);
+}
+
+/* Contact Confirmation Modal Styles */
+.contact-success {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.contact-success .success-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.contact-success h3 {
+  color: #1a365d;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.contact-success p {
+  color: #6b7280;
+  font-size: 16px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.contact-details {
+  text-align: left;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+}
+
+.contact-summary {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.contact-summary .summary-header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #10b981;
+}
+
+.contact-summary .summary-header h4 {
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.ticket-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #10b981;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.message-info {
+  margin-bottom: 20px;
+}
+
+.message-info h5 {
+  color: #1a365d;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.person-info {
+  background: #f0f9ff;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.person-name {
+  display: block;
+  font-weight: 600;
+  color: #1a365d;
+  margin-bottom: 5px;
+}
+
+.person-email {
+  display: block;
+  color: #3182ce;
+  margin-bottom: 3px;
+}
+
+.person-phone {
+  display: block;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.subject-text {
+  background: #fef3c7;
+  padding: 15px;
+  border-radius: 6px;
+  color: #92400e;
+  font-weight: 500;
+  border: 1px solid #fbbf24;
+}
+
+.message-text {
+  background: #f3f4f6;
+  padding: 15px;
+  border-radius: 6px;
+  color: #374151;
+  line-height: 1.6;
+  border: 1px solid #d1d5db;
+  white-space: pre-wrap;
+}
+
+.time-text {
+  background: #e0e7ff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  color: #3730a3;
+  font-weight: 500;
+  border: 1px solid #818cf8;
+}
+
+.next-steps {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.next-steps h5 {
+  color: #065f46;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.next-steps ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.next-steps li {
+  color: #065f46;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.contact-info {
+  background: #eff6ff;
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.contact-info h5 {
+  color: #1e40af;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.method-icon {
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 50%;
+}
+
+.method-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.method-details strong {
+  color: #374151;
+  font-size: 14px;
+}
+
+.method-details span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.contact-btn {
+  background: #10b981 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.contact-btn:hover {
+  background: #059669 !important;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments for contact modal */
+@media (max-width: 768px) {
+  .contact-details {
+    padding: 15px;
+  }
+  
+  .contact-methods {
+    gap: 10px;
+  }
+  
+  .contact-method {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .method-icon {
+    margin: 0 auto;
+  }
+  
+  .summary-header h4 {
+    font-size: 12px;
+  }
+  
+  .ticket-number {
+    font-size: 20px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .train-route {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .route-arrow {
+    transform: rotate(90deg);
+    margin: 10px 0;
+  }
+  
+  .train-info {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .contact-details {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .booking-details {
+    padding: 15px;
+  }
+  
+  .summary-header h4 {
+    font-size: 12px;
+  }
+  
+  .reference-number {
+    font-size: 20px;
+  }
+}

@@ -14,6 +14,10 @@ import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { NewsDetailComponent } from './components/news/news-detail/news-detail.component';
+import { NewsListComponent } from './components/news/news-list/news-list.component';
+import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+import { SchedulesComponent } from './components/schedules/schedules.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { ModalComponent } from './components/modal/modal.component';
     AboutComponent,
     LoginComponent,
     RegisterComponent,
-    ModalComponent
+    ModalComponent,
+    NewsDetailComponent,
+    NewsListComponent,
+    ScrollToTopComponent,
+    SchedulesComponent
   ],
   imports: [
     BrowserModule,

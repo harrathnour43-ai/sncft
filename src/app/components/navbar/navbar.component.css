@@ -24,41 +24,63 @@
   font-size: 24px;
   font-weight: bold;
   text-decoration: none;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
 }
 
 .logo-icon {
-  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
   transition: all 0.3s ease;
 }
 
 .logo-brand {
-  font-weight: 700;
-  letter-spacing: 1px;
-  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: white;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  text-transform: uppercase;
   transition: all 0.3s ease;
+  font-stretch: condensed;
 }
 
 .nav-logo .logo-text:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .nav-logo .logo-text:hover .logo-icon {
-  transform: rotate(10deg) scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-logo .logo-text:hover .logo-image {
+  transform: scale(1.05);
 }
 
 .nav-logo .logo-text:hover .logo-brand {
-  background: linear-gradient(135deg, #63b3ed 0%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #e0e7ff;
+  letter-spacing: 2.2px;
 }
 
 /* Navigation menu */

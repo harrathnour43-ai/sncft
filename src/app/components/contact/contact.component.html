@@ -112,3 +112,12 @@
     </div>
   </div>
 </div>
+
+<!-- Contact Confirmation Modal -->
+<app-modal 
+  [isVisible]="showContactModal"
+  [type]="'contact-confirmation'"
+  [title]="'Message Confirmation'"
+  [contactData]="contactConfirmationData"
+  (closeModalEvent)="closeContactModal()">
+</app-modal>

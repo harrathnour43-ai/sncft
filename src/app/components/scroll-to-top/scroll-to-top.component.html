@@ -1,0 +1,11 @@
+<button 
+  class="scroll-to-top-btn" 
+  [class.visible]="isVisible"
+  (click)="scrollToTop()"
+  (mousedown)="onMouseDown()"
+  (mouseup)="onMouseUp()"
+  aria-label="Scroll to top"
+  title="Scroll to top"
+  type="button">
+  <span class="scroll-icon">↑</span>
+</button>
