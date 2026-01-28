@@ -19,6 +19,7 @@ import { NewsDetailComponent } from './components/news/news-detail/news-detail.c
 import { NewsListComponent } from './components/news/news-list/news-list.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { SchedulesComponent } from './components/schedules/schedules.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TranslatePipe } from './pipes/translate.pipe';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     NewsListComponent,
     ScrollToTopComponent,
     SchedulesComponent,
+    DashboardComponent,
     TranslatePipe
   ],
   imports: [

@@ -1,0 +1,124 @@
+<div class="dashboard-container">
+  <!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="user-welcome">
+        <div class="user-avatar">
+          {{ getUserInitials() }}
+        </div>
+        <div class="user-info">
+          <h1>Welcome back, {{ getUserDisplayName() }}!</h1>
+          <p>Manage your travel journey with SNCFT</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="navigateToBooking()">
+          <span class="btn-icon">🎫</span>
+          Book New Trip
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <main class="dashboard-content">
+    <!-- Stats Cards -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🎫</div>
+          <div class="stat-info">
+            <h3>{{ userStats.totalBookings }}</h3>
+            <p>Total Bookings</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🚂</div>
+          <div class="stat-info">
+            <h3>{{ userStats.upcomingTrips }}</h3>
+            <p>Upcoming Trips</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h3>{{ userStats.completedTrips }}</h3>
+            <p>Completed Trips</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👤</div>
+          <div class="stat-info">
+            <h3>Profile</h3>
+            <p>Account Settings</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions-section">
+      <h2>Quick Actions</h2>
+      <div class="quick-actions-grid">
+        <button class="action-card" (click)="navigateToBooking()">
+          <div class="action-icon">🎫</div>
+          <h3>Book New Trip</h3>
+          <p>Plan your next journey</p>
+        </button>
+        <button class="action-card" (click)="navigateToProfile()">
+          <div class="action-icon">⚙️</div>
+          <h3>My Profile</h3>
+          <p>Update your information</p>
+        </button>
+        <button class="action-card" (click)="navigateToBooking()">
+          <div class="action-icon">📅</div>
+          <h3>View Schedules</h3>
+          <p>Check train timetables</p>
+        </button>
+        <button class="action-card" (click)="navigateToProfile()">
+          <div class="action-icon">📞</div>
+          <h3>Contact Support</h3>
+          <p>Get help with your booking</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- Recent Bookings -->
+    <section class="recent-bookings-section">
+      <div class="section-header">
+        <h2>Recent Bookings</h2>
+        <button class="btn-link">View All</button>
+      </div>
+      <div class="bookings-list">
+        <div *ngFor="let booking of recentBookings" class="booking-card">
+          <div class="booking-header">
+            <div class="booking-info">
+              <span class="train-number">{{ booking.trainNumber }}</span>
+              <span class="route">{{ booking.from }} → {{ booking.to }}</span>
+            </div>
+            <div class="booking-status">
+              <span class="status-badge {{ getStatusClass(booking.status) }}">
+                {{ getStatusText(booking.status) }}
+              </span>
+            </div>
+          </div>
+          <div class="booking-details">
+            <div class="booking-time">
+              <span class="time">{{ formatTime(booking.departureTime) }}</span>
+              <span class="date">{{ formatDate(booking.departureDate) }}</span>
+            </div>
+            <div class="booking-price">
+              <span class="class">{{ booking.class }}</span>
+              <span class="price">{{ formatCurrency(booking.price) }}</span>
+            </div>
+          </div>
+          <div class="booking-actions">
+            <button class="btn btn-outline" (click)="viewBookingDetails(booking.id)">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
