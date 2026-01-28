@@ -23,6 +23,7 @@ app.use(express.json());
 app.use('/api/bookings', require('./src/routes/bookingRoutes'));
 app.use('/api/trains', require('./src/routes/bookingRoutes'));
 app.use('/api/contact', require('./src/routes/contactRoutes'));
+app.use('/api/auth', require('./src/routes/authRoutes'));
 
 const PORT = process.env.PORT || 5000;
 

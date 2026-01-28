@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent} from './components/home/home.component';
-import { HorairesComponent } from './components/horaires/horaires.component';
-import { SchedulesComponent } from './components/schedules/schedules.component';
-import { BookingComponent } from './components/booking/booking.component';
-import { ContactComponent } from './components/contact/contact.component';
-import { AboutComponent } from './components/about/about.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AboutComponent } from './components/about/about.component';
+import { BookingComponent } from './components/booking/booking.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { HorairesComponent } from './components/horaires/horaires.component';
+import { SchedulesComponent } from './components/schedules/schedules.component';
 import { NewsDetailComponent } from './components/news/news-detail/news-detail.component';
 import { NewsListComponent } from './components/news/news-list/news-list.component';
 

@@ -12,46 +12,54 @@
     <div class="nav-menu" [class.active]="isMenuOpen">
       <ul class="nav-list">
         <li class="nav-item">
-          <a routerLink="/" class="nav-link" [class.active]="isRouteActive('/')">{{ translations.home }}</a>
+          <a routerLink="/" class="nav-link" [class.active]="isRouteActive('/')">Home</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/about" class="nav-link" [class.active]="isRouteActive('/about')">{{ translations.about }}</a>
+          <a routerLink="/about" class="nav-link" [class.active]="isRouteActive('/about')">About</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/schedules" class="nav-link" [class.active]="isRouteActive('/schedules')">{{ translations.schedules }}</a>
+          <a routerLink="/schedules" class="nav-link" [class.active]="isRouteActive('/schedules')">Schedules</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/booking" class="nav-link" [class.active]="isRouteActive('/booking')">{{ translations.booking }}</a>
+          <a routerLink="/booking" class="nav-link" [class.active]="isRouteActive('/booking')">Booking</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/contact" class="nav-link" [class.active]="isRouteActive('/contact')">{{ translations.contact }}</a>
+          <a routerLink="/contact" class="nav-link" [class.active]="isRouteActive('/contact')">Contact</a>
         </li>
       </ul>
       
       <div class="nav-actions">
-        <!-- Language Switcher -->
-        <div class="language-switcher" [class.active]="isLanguageDropdownOpen" (click)="toggleLanguageDropdown($event)">
-          <span class="current-lang">{{ currentLanguageFlag }} {{ currentLanguageName }}</span>
-          <span class="lang-arrow">▼</span>
-          <div class="lang-dropdown">
-            <div class="lang-option" [class.active]="currentLanguage === 'en'" (click)="changeLanguage('en')">
-              <span class="flag">🇬🇧</span>
-              <span class="lang-name">English</span>
+        <!-- User Authentication Section -->
+        <div class="nav-cta">
+          <!-- Show when user is logged in -->
+          <div *ngIf="isLoggedIn()" class="user-dropdown" [class.active]="isUserDropdownOpen">
+            <div class="user-info" (click)="toggleUserDropdown($event)">
+              <div class="user-avatar">{{ getUserInitials() }}</div>
+              <span class="user-name">{{ getUserDisplayName() }}</span>
+              <span class="dropdown-arrow">▼</span>
             </div>
-            <div class="lang-option" [class.active]="currentLanguage === 'fr'" (click)="changeLanguage('fr')">
-              <span class="flag">🇫🇷</span>
-              <span class="lang-name">Français</span>
-            </div>
-            <div class="lang-option" [class.active]="currentLanguage === 'ar'" (click)="changeLanguage('ar')">
-              <span class="flag">🇹🇳</span>
-              <span class="lang-name">العربية</span>
+            <div class="user-menu">
+              <a routerLink="/profile" class="user-menu-item">
+                <span class="menu-icon">👤</span>
+                <span>My Profile</span>
+              </a>
+              <a routerLink="/bookings" class="user-menu-item">
+                <span class="menu-icon">🎫</span>
+                <span>My Bookings</span>
+              </a>
+              <div class="user-menu-divider"></div>
+              <a href="#" class="user-menu-item logout" (click)="logout()">
+                <span class="menu-icon">🚪</span>
+                <span>Logout</span>
+              </a>
             </div>
           </div>
-        </div>
-        
-        <div class="nav-cta">
-          <a href="/login" class="login-button">{{ translations.login }}</a>
-          <a href="/register" class="register-button">{{ translations.register }}</a>
+          
+          <!-- Show when user is not logged in -->
+          <div *ngIf="!isLoggedIn()" class="auth-buttons">
+            <a routerLink="/login" class="login-button">Login</a>
+            <a routerLink="/register" class="register-button">Register</a>
+          </div>
         </div>
       </div>
     </div>

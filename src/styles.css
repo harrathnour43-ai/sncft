@@ -5,12 +5,69 @@
   box-sizing: border-box;
 }
 
+/* Aggressive reset for all elements */
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  line-height: 1;
+}
+
+/* App wrapper for flexbox layout */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure proper spacing for main content */
+main {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fix for full-height pages that need to account for navbar */
+.full-height-with-nav {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* Force footer to bottom */
+.footer {
+  margin-top: auto !important;
+  flex-shrink: 0;
+}
+
+/* Remove all margins from router outlet content */
+router-outlet + * {
+  margin: 0;
+}
+
+/* Remove margins from all direct children */
+.main-content > * {
+  margin: 0;
 }
 
 /* You can add global styles to this file, and also import other style files */

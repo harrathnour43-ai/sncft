@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { NewsDetailComponent } from './components/news/news-detail/news-detail.c
 import { NewsListComponent } from './components/news/news-list/news-list.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { SchedulesComponent } from './components/schedules/schedules.component';
+import { TranslatePipe } from './pipes/translate.pipe';
 
 @NgModule({
   declarations: [
@@ -35,11 +37,13 @@ import { SchedulesComponent } from './components/schedules/schedules.component';
     NewsDetailComponent,
     NewsListComponent,
     ScrollToTopComponent,
-    SchedulesComponent
+    SchedulesComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

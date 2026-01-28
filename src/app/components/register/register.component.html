@@ -20,6 +20,24 @@
       <p>Create your account and travel with confidence</p>
     </div>
     
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      <span class="alert-icon">✅</span>
+      {{ successMessage }}
+      <div class="redirect-info">
+        <small>Redirecting to login page...</small>
+      </div>
+    </div>
+    
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      <span class="alert-icon">❌</span>
+      {{ errorMessage }}
+      <ul *ngIf="validationErrors.length > 0" class="error-list">
+        <li *ngFor="let error of validationErrors">{{ error }}</li>
+      </ul>
+    </div>
+    
     <form class="register-form" (ngSubmit)="onRegister()">
       <div class="form-row">
         <div class="form-group">
@@ -30,8 +48,10 @@
             name="firstName" 
             placeholder="Enter your first name"
             [(ngModel)]="registerData.firstName"
+            [class.error]="isFieldInvalid('firstName')"
             required
           >
+          <span *ngIf="isFieldInvalid('firstName')" class="field-error">First name is required</span>
         </div>
         
         <div class="form-group">
@@ -42,8 +62,10 @@
             name="lastName" 
             placeholder="Enter your last name"
             [(ngModel)]="registerData.lastName"
+            [class.error]="isFieldInvalid('lastName')"
             required
           >
+          <span *ngIf="isFieldInvalid('lastName')" class="field-error">Last name is required</span>
         </div>
       </div>
       
@@ -53,10 +75,13 @@
           type="email" 
           id="email" 
           name="email" 
-          placeholder="Enter your email"
+          placeholder="Enter your email address"
           [(ngModel)]="registerData.email"
+          [class.error]="isFieldInvalid('email')"
+          (blur)="checkEmailAvailability()"
           required
         >
+        <span *ngIf="isFieldInvalid('email')" class="field-error">Valid email is required</span>
       </div>
       
       <div class="form-group">
@@ -65,48 +90,104 @@
           type="tel" 
           id="phone" 
           name="phone" 
-          placeholder="Enter your phone number"
+          placeholder="21234567 or +21621234567"
           [(ngModel)]="registerData.phone"
+          [class.error]="isFieldInvalid('phone')"
+          required
         >
+        <span *ngIf="isFieldInvalid('phone')" class="field-error">Valid Tunisian phone number is required</span>
+        <small class="form-hint">Format: 21234567 or +21621234567 (8 digits starting with 2,3,4,5,7,9)</small>
       </div>
       
       <div class="form-group">
         <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          placeholder="Create a strong password"
-          [(ngModel)]="registerData.password"
-          required
-        >
+        <div class="password-input-container">
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Create a strong password"
+            [(ngModel)]="registerData.password"
+            [class.error]="isFieldInvalid('password')"
+            required
+          >
+          <button type="button" class="password-toggle" (click)="togglePassword('password')">
+            👁️
+          </button>
+        </div>
+        
+        <!-- Password Strength Indicator -->
+        <div *ngIf="registerData.password" class="password-strength">
+          <div class="strength-bar">
+            <div 
+              class="strength-fill" 
+              [style.width.%]="(getPasswordStrength().strength / 5) * 100"
+              [style.background-color]="getPasswordStrength().color"
+            ></div>
+          </div>
+          <span class="strength-text" [style.color]="getPasswordStrength().color">
+            {{ getPasswordStrength().text }}
+          </span>
+        </div>
+        
+        <span *ngIf="isFieldInvalid('password')" class="field-error">Password is required</span>
       </div>
       
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input 
-          type="password" 
-          id="confirmPassword" 
-          name="confirmPassword" 
-          placeholder="Confirm your password"
-          [(ngModel)]="registerData.confirmPassword"
-          required
-        >
+        <div class="password-input-container">
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            name="confirmPassword" 
+            placeholder="Confirm your password"
+            [(ngModel)]="registerData.confirmPassword"
+            [class.error]="isFieldInvalid('confirmPassword')"
+            required
+          >
+          <button type="button" class="password-toggle" (click)="togglePassword('confirmPassword')">
+            👁️
+          </button>
+        </div>
+        <span *ngIf="isFieldInvalid('confirmPassword')" class="field-error">Please confirm your password</span>
+        <span *ngIf="registerData.confirmPassword && registerData.password !== registerData.confirmPassword" 
+              class="field-error">Passwords do not match</span>
       </div>
       
-      <div class="form-options">
-        <label class="checkbox-container">
-          <input type="checkbox" [(ngModel)]="registerData.terms">
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            name="terms" 
+            [(ngModel)]="registerData.terms"
+            required
+          >
           <span class="checkmark"></span>
-          I agree to the <a href="#" class="terms-link" (click)="openTermsModal($event)">Terms of Service</a> and <a href="#" class="terms-link" (click)="openPrivacyModal($event)">Privacy Policy</a>
+          I agree to the 
+          <a href="#" (click)="openTermsModal($event)">Terms of Service</a> 
+          and 
+          <a href="#" (click)="openPrivacyModal($event)">Privacy Policy</a>
         </label>
       </div>
       
-      <button type="submit" class="register-btn">Begin Your Journey</button>
+      <button 
+        type="submit" 
+        class="register-btn"
+        [disabled]="isLoading"
+        [class.loading]="isLoading"
+      >
+        <span *ngIf="!isLoading">Create Account</span>
+        <span *ngIf="isLoading" class="loading-spinner">
+          <span class="spinner"></span>
+          Creating Account...
+        </span>
+      </button>
     </form>
     
     <div class="register-footer">
-      <p>Already have an account? <a routerLink="/login" class="login-link">Login here</a></p>
+      <p>Already have an account? 
+        <a routerLink="/login" class="login-link">Sign In</a>
+      </p>
     </div>
   </div>
   

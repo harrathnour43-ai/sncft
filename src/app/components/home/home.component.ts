@@ -80,10 +80,6 @@ export class HomeComponent implements OnInit {
     this.startAutoSlide();
   }
 
-  ngOnDestroy(): void {
-    this.stopAutoSlide();
-  }
-
   get hasActiveAlerts(): boolean {
     return this.trainAlerts.length > 0;
   }
