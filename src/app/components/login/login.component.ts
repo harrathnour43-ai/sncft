@@ -27,7 +27,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // Redirect if already logged in
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/']).then(() => {
+        // Refresh the page after successful navigation
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      });
       return;
     }
 
@@ -70,7 +75,12 @@ export class LoginComponent implements OnInit {
           
           // Redirect to home page after a short delay
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/']).then(() => {
+              // Refresh the page after successful navigation
+              setTimeout(() => {
+                window.location.reload();
+              }, 100);
+            });
           }, 1000);
         } else {
           this.errorMessage = response.message || 'Login failed. Please try again.';

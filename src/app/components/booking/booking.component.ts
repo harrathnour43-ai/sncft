@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookingConfirmationData } from '../modal/modal.component';
+import { BookingService, BookingRequest } from '../../services/booking.service';
 
 export interface BookingData {
   from: string;
@@ -59,7 +60,10 @@ export class BookingComponent implements OnInit {
   showBookingModal: boolean = false;
   bookingConfirmationData: BookingConfirmationData | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private bookingService: BookingService
+  ) {}
 
   ngOnInit(): void {
     // Load saved booking data from localStorage
@@ -289,5 +293,46 @@ export class BookingComponent implements OnInit {
     } catch (error) {
       console.error('Error loading booking data:', error);
     }
+  }
+
+  // Method to handle actual booking submission to database
+  finalizeBooking(): void {
+    if (!this.selectedTrain || !this.bookingConfirmationData) {
+      this.showErrorModal('Booking data is missing');
+      return;
+    }
+
+    const bookingRequest: BookingRequest = {
+      trainNumber: this.selectedTrain.trainNumber,
+      from: this.selectedTrain.from,
+      to: this.selectedTrain.to,
+      departureDate: this.selectedTrain.departureDate,
+      departureTime: this.selectedTrain.departureTime,
+      arrivalTime: this.selectedTrain.arrivalTime,
+      class: this.bookingData.class,
+      price: this.bookingConfirmationData.totalPrice,
+      passengers: this.bookingData.passengers
+    };
+
+    this.bookingService.createBooking(bookingRequest).subscribe({
+      next: (response) => {
+        console.log('✅ Booking created successfully:', response);
+        this.showBookingModal = false;
+        
+        // Show success message
+        alert(`Booking confirmed! Your booking reference is: ${response.id}`);
+        
+        // Redirect to dashboard
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('❌ Error creating booking:', error);
+        console.error('Error details:', error.error);
+        console.error('Status:', error.status);
+        console.error('Status text:', error.statusText);
+        
+        this.showErrorModal(`Failed to create booking: ${error.error?.message || error.message || 'Unknown error'}`);
+      }
+    });
   }
 }

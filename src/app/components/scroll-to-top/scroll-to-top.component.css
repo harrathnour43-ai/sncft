@@ -4,7 +4,7 @@
   left: 30px;
   width: 60px;
   height: 60px;
-  background: #ff0000; /* Changed to red for better visibility during testing */
+  background: #07a8ff; /* Changed to red for better visibility during testing */
   color: white;
   border: 3px solid #ffffff; /* Added white border for visibility */
   border-radius: 50%;
@@ -14,7 +14,7 @@
   justify-content: center;
   font-size: 24px;
   font-weight: bold;
-  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6); /* Red shadow for visibility */
+  box-shadow: 0 8px 25px rgba(135, 108, 255, 0.6); /* Red shadow for visibility */
   z-index: 99999; /* Very high z-index to ensure it's on top */
   opacity: 1;
   visibility: visible;
@@ -29,14 +29,14 @@
 }
 
 .scroll-to-top-btn:hover {
-  background: #cc0000;
+  background: #007acc;
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 0, 0, 0.8);
+  box-shadow: 0 12px 35px rgba(135, 108, 255, 0.8);
 }
 
 .scroll-to-top-btn:active {
   transform: translateY(0);
-  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.6);
+  box-shadow: 0 4px 15px rgba(135, 108, 255, 0.6);
 }
 
 .scroll-to-top-btn.visible {

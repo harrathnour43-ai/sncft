@@ -1,4 +1,12 @@
 <div class="dashboard-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading your dashboard...</p>
+    </div>
+  </div>
+
   <!-- Dashboard Header -->
   <header class="dashboard-header">
     <div class="header-content">
@@ -46,13 +54,7 @@
             <p>Completed Trips</p>
           </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-icon">👤</div>
-          <div class="stat-info">
-            <h3>Profile</h3>
-            <p>Account Settings</p>
-          </div>
-        </div>
+        
       </div>
     </section>
 
@@ -75,7 +77,7 @@
           <h3>View Schedules</h3>
           <p>Check train timetables</p>
         </button>
-        <button class="action-card" (click)="navigateToProfile()">
+        <button class="action-card" (click)="navigateToContact()">
           <div class="action-icon">📞</div>
           <h3>Contact Support</h3>
           <p>Get help with your booking</p>
@@ -87,10 +89,71 @@
     <section class="recent-bookings-section">
       <div class="section-header">
         <h2>Recent Bookings</h2>
-        <button class="btn-link">View All</button>
+        <div class="section-actions">
+          <button class="btn-link" (click)="clearFilters()" *ngIf="searchTerm || statusFilter !== 'all' || dateFilter !== 'all'">
+            Clear Filters
+          </button>
+        </div>
       </div>
+
+      <!-- Search and Filters -->
+      <div class="bookings-filters">
+        <div class="search-bar">
+          <input 
+            type="text" 
+            placeholder="Search by train, route, reference, or price..." 
+            [(ngModel)]="searchTerm" 
+            (input)="onSearchChange()"
+            class="search-input"
+          >
+          <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="filter-controls">
+          <select 
+            [(ngModel)]="statusFilter" 
+            (change)="onStatusFilterChange()"
+            class="filter-select"
+          >
+            <option value="all">All Status</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          
+          <select 
+            [(ngModel)]="dateFilter" 
+            (change)="onDateFilterChange()"
+            class="filter-select"
+          >
+            <option value="all">All Dates</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="past">Past</option>
+            <option value="today">Today</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Bookings List -->
       <div class="bookings-list">
-        <div *ngFor="let booking of recentBookings" class="booking-card">
+        <!-- No bookings message -->
+        <div *ngIf="displayedBookings.length === 0 && !isLoading" class="no-bookings">
+          <div class="no-bookings-icon">📋</div>
+          <h3>No bookings found</h3>
+          <p *ngIf="searchTerm || statusFilter !== 'all' || dateFilter !== 'all'">
+            Try adjusting your filters or search terms
+          </p>
+          <p *ngIf="!searchTerm && statusFilter === 'all' && dateFilter === 'all'">
+            You haven't made any bookings yet. Start by booking your first trip!
+          </p>
+          <button class="btn btn-primary" (click)="navigateToBooking()">
+            Book Your First Trip
+          </button>
+        </div>
+
+        <!-- Booking cards (max 3 initially) -->
+        <div *ngFor="let booking of displayedBookings" class="booking-card">
           <div class="booking-header">
             <div class="booking-info">
               <span class="train-number">{{ booking.trainNumber }}</span>
@@ -102,21 +165,57 @@
               </span>
             </div>
           </div>
+          
           <div class="booking-details">
             <div class="booking-time">
-              <span class="time">{{ formatTime(booking.departureTime) }}</span>
-              <span class="date">{{ formatDate(booking.departureDate) }}</span>
+              <div class="time-info">
+                <span class="time-label">Departure</span>
+                <span class="time-value">{{ formatTime(booking.departureTime) }}</span>
+                <span class="date-value">{{ formatDate(booking.departureDate) }}</span>
+              </div>
+              <div class="time-info">
+                <span class="time-label">Arrival</span>
+                <span class="time-value">{{ formatTime(booking.arrivalTime) }}</span>
+              </div>
             </div>
-            <div class="booking-price">
-              <span class="class">{{ booking.class }}</span>
-              <span class="price">{{ formatCurrency(booking.price) }}</span>
+            
+            <div class="booking-meta">
+              <div class="meta-info">
+                <span class="meta-label">Passengers</span>
+                <span class="meta-value">{{ booking.passengers }}</span>
+              </div>
+              <div class="meta-info">
+                <span class="meta-label">Class</span>
+                <span class="meta-value">{{ booking.class }}</span>
+              </div>
+              <div class="meta-info">
+                <span class="meta-label">Reference</span>
+                <span class="meta-value">{{ booking.bookingReference }}</span>
+              </div>
+              <div class="meta-info price">
+                <span class="meta-label">Price</span>
+                <span class="meta-value">{{ formatCurrency(booking.price) }}</span>
+              </div>
             </div>
           </div>
+          
           <div class="booking-actions">
-            <button class="btn btn-outline" (click)="viewBookingDetails(booking.id)">
+            <button class="btn btn-sm btn-outline" (click)="viewBookingDetails(booking.id)">
               View Details
             </button>
           </div>
+        </div>
+
+        <!-- View More/Less Button -->
+        <div *ngIf="filteredBookings.length > INITIAL_DISPLAY_COUNT" class="view-more-container">
+          <button class="btn btn-secondary view-more" (click)="toggleViewMore()">
+            <span *ngIf="!showAllBookings">
+              View More ({{ filteredBookings.length - INITIAL_DISPLAY_COUNT }} more)
+            </span>
+            <span *ngIf="showAllBookings">
+              View Less
+            </span>
+          </button>
         </div>
       </div>
     </section>

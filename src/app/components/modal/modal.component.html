@@ -320,7 +320,7 @@
     
     <div class="modal-footer">
       <button class="modal-action-btn" (click)="onClose()" *ngIf="type === 'terms' || type === 'privacy'">I Understand</button>
-      <button class="modal-action-btn booking-btn" (click)="onClose()" *ngIf="type === 'booking-confirmation'">Done</button>
+      <button class="modal-action-btn booking-btn" (click)="onBookingConfirmed()" *ngIf="type === 'booking-confirmation'">Confirm Booking</button>
       <button class="modal-action-btn contact-btn" (click)="onClose()" *ngIf="type === 'contact-confirmation'">Got It</button>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,9 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { BookingService } from './services/booking.service';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import { TranslatePipe } from './pipes/translate.pipe';
     ScrollToTopComponent,
     SchedulesComponent,
     DashboardComponent,
-    TranslatePipe
+    TranslatePipe,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,14 @@ import { TranslatePipe } from './pipes/translate.pipe';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    BookingService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

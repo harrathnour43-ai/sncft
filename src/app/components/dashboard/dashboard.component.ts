@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { BookingService, Booking } from '../../services/booking.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,55 +10,186 @@ import { AuthService } from '../../services/auth.service';
 })
 export class DashboardComponent implements OnInit {
   currentUser: any = null;
-  isLoading = false;
+  isLoading = true;
+  recentBookings: Booking[] = [];
+  filteredBookings: Booking[] = [];
+  displayedBookings: Booking[] = [];
+
+  // Pagination and display properties
+  showAllBookings = false;
+  readonly INITIAL_DISPLAY_COUNT = 3;
+
+  // Search and filter properties
+  searchTerm = '';
+  statusFilter = 'all';
+  dateFilter = 'all';
 
   // Simple user data
   userStats = {
     totalBookings: 0,
     upcomingTrips: 0,
-    completedTrips: 0
+    completedTrips: 0,
+    confirmedTrips: 0
   };
-
-  // Sample recent bookings
-  recentBookings = [
-    {
-      id: 'BK001',
-      trainNumber: 'TN-202',
-      from: 'Tunis',
-      to: 'Sfax',
-      departureDate: '2024-12-15',
-      departureTime: '08:30',
-      class: 'First',
-      price: 45.50,
-      status: 'upcoming'
-    },
-    {
-      id: 'BK002', 
-      trainNumber: 'MN-105',
-      from: 'Sousse',
-      to: 'Monastir',
-      departureDate: '2024-12-10',
-      departureTime: '14:15',
-      class: 'Second',
-      price: 12.00,
-      status: 'completed'
-    }
-  ];
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private bookingService: BookingService
   ) {}
 
   ngOnInit(): void {
+    console.log('🚀 Dashboard component initialized');
     this.currentUser = this.authService.getCurrentUser();
-    this.calculateStats();
+    console.log('👤 Current user:', this.currentUser);
+    this.refreshBookings();
+  }
+
+  refreshBookings(): void {
+    console.log('🔄 Refreshing user bookings...');
+    this.isLoading = true;
+    this.loadUserBookings();
+  }
+
+  loadUserBookings(): void {
+    console.log('🔄 Loading user bookings...');
+    this.bookingService.getUserBookings().subscribe({
+      next: (response: any) => {
+        console.log('✅ Bookings loaded successfully:', response);
+        
+        // Handle different response structures
+        if (response && response.data && Array.isArray(response.data)) {
+          this.recentBookings = response.data;
+        } else if (Array.isArray(response)) {
+          this.recentBookings = response;
+        } else {
+          console.warn('Unexpected response format:', response);
+          this.recentBookings = [];
+        }
+        
+        console.log('📋 Recent bookings array:', this.recentBookings);
+        this.applyFiltersAndSearch();
+        this.calculateStats();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('❌ Error loading bookings:', error);
+        console.error('Error details:', error.error);
+        console.error('Status:', error.status);
+        console.error('Status text:', error.statusText);
+        this.isLoading = false;
+        // Use empty array as fallback - no sample data
+        this.recentBookings = [];
+        this.filteredBookings = [];
+        this.displayedBookings = [];
+        this.calculateStats();
+      }
+    });
   }
 
   calculateStats(): void {
+    console.log('📊 Calculating user stats...');
+    console.log('📋 Bookings for stats:', this.recentBookings);
+    
     this.userStats.totalBookings = this.recentBookings.length;
     this.userStats.upcomingTrips = this.recentBookings.filter(b => b.status === 'upcoming').length;
     this.userStats.completedTrips = this.recentBookings.filter(b => b.status === 'completed').length;
+    this.userStats.confirmedTrips = this.recentBookings.filter(b => b.status === 'confirmed').length;
+    
+    console.log('📊 User stats calculated:', this.userStats);
+  }
+
+  // Apply filters and search to bookings
+  applyFiltersAndSearch(): void {
+    console.log('🔍 Applying filters and search...');
+    
+    let filtered = [...this.recentBookings];
+    
+    // Apply status filter
+    if (this.statusFilter !== 'all') {
+      filtered = filtered.filter(booking => booking.status === this.statusFilter);
+    }
+    
+    // Apply date filter
+    if (this.dateFilter !== 'all') {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      filtered = filtered.filter(booking => {
+        const bookingDate = new Date(booking.departureDate);
+        bookingDate.setHours(0, 0, 0, 0);
+        
+        switch (this.dateFilter) {
+          case 'upcoming':
+            return bookingDate >= today;
+          case 'past':
+            return bookingDate < today;
+          case 'today':
+            return bookingDate.getTime() === today.getTime();
+          default:
+            return true;
+        }
+      });
+    }
+    
+    // Apply search filter
+    if (this.searchTerm.trim()) {
+      const searchLower = this.searchTerm.toLowerCase().trim();
+      filtered = filtered.filter(booking => 
+        booking.trainNumber.toLowerCase().includes(searchLower) ||
+        booking.from.toLowerCase().includes(searchLower) ||
+        booking.to.toLowerCase().includes(searchLower) ||
+        booking.bookingReference.toLowerCase().includes(searchLower) ||
+        booking.price.toString().includes(searchLower) ||
+        booking.class.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    this.filteredBookings = filtered;
+    this.updateDisplayedBookings();
+    
+    console.log('📋 Filtered bookings:', this.filteredBookings.length);
+    console.log('📋 Displayed bookings:', this.displayedBookings.length);
+  }
+
+  // Update displayed bookings based on showAllBookings flag
+  updateDisplayedBookings(): void {
+    if (this.showAllBookings) {
+      this.displayedBookings = this.filteredBookings;
+    } else {
+      this.displayedBookings = this.filteredBookings.slice(0, this.INITIAL_DISPLAY_COUNT);
+    }
+  }
+
+  // Toggle show all bookings
+  toggleViewMore(): void {
+    this.showAllBookings = !this.showAllBookings;
+    this.updateDisplayedBookings();
+    console.log('🔄 View more toggled:', this.showAllBookings);
+  }
+
+  // Handle search input
+  onSearchChange(): void {
+    this.applyFiltersAndSearch();
+  }
+
+  // Handle status filter change
+  onStatusFilterChange(): void {
+    this.applyFiltersAndSearch();
+  }
+
+  // Handle date filter change
+  onDateFilterChange(): void {
+    this.applyFiltersAndSearch();
+  }
+
+  // Clear all filters
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.statusFilter = 'all';
+    this.dateFilter = 'all';
+    this.applyFiltersAndSearch();
+    console.log('🧹 Filters cleared');
   }
 
   // Navigation methods
@@ -69,6 +201,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 
+  navigateToContact(): void {
+    this.router.navigate(['/contact']);
+  }
+
   viewBookingDetails(bookingId: string): void {
     // TODO: Navigate to booking details
     console.log('View booking:', bookingId);
@@ -76,28 +212,23 @@ export class DashboardComponent implements OnInit {
 
   // Utility methods
   formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
-    });
+    return this.bookingService.formatDate(dateString);
   }
 
   formatTime(timeString: string): string {
-    return timeString;
+    return this.bookingService.formatTime(timeString);
   }
 
   formatCurrency(amount: number): string {
-    return `TND ${amount.toFixed(2)}`;
+    return this.bookingService.formatCurrency(amount);
   }
 
   getStatusClass(status: string): string {
-    return status === 'upcoming' ? 'status-upcoming' : 'status-completed';
+    return this.bookingService.getStatusClass(status);
   }
 
   getStatusText(status: string): string {
-    return status === 'upcoming' ? 'Upcoming' : 'Completed';
+    return this.bookingService.getStatusText(status);
   }
 
   // User info methods

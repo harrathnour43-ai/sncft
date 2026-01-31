@@ -36,6 +36,7 @@ export class ModalComponent {
   @Input() bookingData: BookingConfirmationData | null = null;
   @Input() contactData: ContactConfirmationData | null = null;
   @Output() closeModalEvent = new EventEmitter<void>();
+  @Output() bookingConfirmedEvent = new EventEmitter<void>();
   
   scrollPosition: number = 0;
 
@@ -50,6 +51,11 @@ export class ModalComponent {
   }
 
   onClose(): void {
+    this.closeModal();
+  }
+
+  onBookingConfirmed(): void {
+    this.bookingConfirmedEvent.emit();
     this.closeModal();
   }
 

@@ -1,0 +1,158 @@
+<div class="profile-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Updating profile...</p>
+    </div>
+  </div>
+
+  <!-- Profile Header -->
+  <header class="profile-header">
+    <div class="header-content">
+      <div class="header-left">
+        <button class="btn-back" (click)="navigateToDashboard()" title="Back to Dashboard">
+          <span class="back-icon">←</span>
+          Back to Dashboard
+        </button>
+        <h1>My Profile</h1>
+        <p>Manage your personal information</p>
+      </div>
+      <div class="header-actions">
+        <button *ngIf="!isEditing" class="btn btn-primary" (click)="enableEditing()">
+          <span class="btn-icon">✏️</span>
+          Edit Profile
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Profile Content -->
+  <main class="profile-content">
+    <!-- Success/Error Messages -->
+    <div *ngIf="successMessage || errorMessage" class="message-container">
+      <div *ngIf="successMessage" class="success-message">
+        <span class="message-icon">✅</span>
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="error-message">
+        <span class="message-icon">❌</span>
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <!-- Profile Card -->
+    <section class="profile-section">
+      <div class="profile-card">
+        <!-- Profile Avatar -->
+        <div class="profile-avatar">
+          <div class="avatar-circle">
+            {{ getInitials() }}
+          </div>
+          <div class="avatar-info">
+            <h2>{{ profileData.fullName }}</h2>
+            <p>Member since {{ getMemberSince() }}</p>
+          </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="profile-form">
+          <!-- Full Name Field -->
+          <div class="form-group">
+            <label for="fullName" class="form-label">
+              <span class="label-icon">👤</span>
+              Full Name
+            </label>
+            <div class="input-wrapper">
+              <input 
+                id="fullName"
+                type="text" 
+                class="form-input"
+                [class.error]="isFieldInvalid('fullName') && errorMessage"
+                [readonly]="!isEditing"
+                [(ngModel)]="profileData.fullName"
+                placeholder="Enter your full name"
+              >
+              <span *ngIf="isEditing" class="input-icon">✏️</span>
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="email" class="form-label">
+              <span class="label-icon">📧</span>
+              Email Address
+            </label>
+            <div class="input-wrapper">
+              <input 
+                id="email"
+                type="email" 
+                class="form-input"
+                [class.error]="isFieldInvalid('email') && errorMessage"
+                [readonly]="!isEditing"
+                [(ngModel)]="profileData.email"
+                placeholder="Enter your email address"
+              >
+              <span *ngIf="isEditing" class="input-icon">📧</span>
+            </div>
+          </div>
+
+          <!-- Phone Number Field -->
+          <div class="form-group">
+            <label for="phoneNumber" class="form-label">
+              <span class="label-icon">📱</span>
+              Phone Number
+            </label>
+            <div class="input-wrapper">
+              <input 
+                id="phoneNumber"
+                type="tel" 
+                class="form-input"
+                [class.error]="isFieldInvalid('phoneNumber') && errorMessage"
+                [readonly]="!isEditing"
+                [(ngModel)]="profileData.phoneNumber"
+                placeholder="Enter your phone number"
+                maxlength="8"
+              >
+              <span *ngIf="isEditing" class="input-icon">📱</span>
+            </div>
+            <small class="form-hint">Tunisian phone number (8 digits)</small>
+          </div>
+
+          <!-- Action Buttons -->
+          <div *ngIf="isEditing" class="form-actions">
+            <button class="btn btn-secondary" (click)="cancelEditing()">
+              <span class="btn-icon">❌</span>
+              Cancel
+            </button>
+            <button class="btn btn-primary" (click)="updateProfile()">
+              <span class="btn-icon">💾</span>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Information -->
+    <section class="info-section">
+      <div class="info-card">
+        <h3>Account Information</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">User ID</span>
+            <span class="info-value">{{ currentUser?.id || 'N/A' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Account Status</span>
+            <span class="info-value status-active">Active</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Last Updated</span>
+            <span class="info-value">{{ getLastUpdated() }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

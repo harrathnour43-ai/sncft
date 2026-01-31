@@ -1,15 +1,24 @@
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    id: {
+        type: String,
+        required: true,
+        unique: true
     },
-    train: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Train',
-        required: true
+    bookingReference: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    userId: {
+        type: String,
+        required: true,
+        default: 'guest'
+    },
+    trainNumber: {
+        type: String,
+        required: [true, 'Please specify train number']
     },
     from: {
         type: String,
@@ -22,47 +31,36 @@ const bookingSchema = new mongoose.Schema({
         enum: ['tunis', 'sfax', 'sousse', 'monastir', 'bizerte', 'gabes', 'tozeur', 'djerba']
     },
     departureDate: {
-        type: Date,
+        type: String,
         required: [true, 'Please specify departure date']
     },
-    returnDate: {
-        type: Date
+    departureTime: {
+        type: String,
+        required: [true, 'Please specify departure time']
+    },
+    arrivalTime: {
+        type: String,
+        required: [true, 'Please specify arrival time']
     },
     passengers: {
         type: Number,
         required: [true, 'Please specify number of passengers'],
-        min: [1, 'At least 1 passenger required'],
-        max: [6, 'Maximum 6 passengers allowed']
+        min: 1,
+        max: 10
     },
     class: {
         type: String,
-        required: [true, 'Please specify class'],
-        enum: ['economy', 'business', 'first'],
-        default: 'economy'
+        required: [true, 'Please specify travel class'],
+        enum: ['First', 'Second', 'Business', 'Economy', 'Standard', 'Premium']
     },
-    totalPrice: {
+    price: {
         type: Number,
-        required: [true, 'Total price is required']
+        required: [true, 'Please specify price']
     },
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'cancelled', 'completed'],
-        default: 'pending'
-    },
-    paymentMethod: {
-        type: String,
-        enum: ['credit', 'debit', 'cash'],
-        required: [true, 'Please specify payment method']
-    },
-    paymentStatus: {
-        type: String,
-        enum: ['pending', 'paid', 'refunded'],
-        default: 'pending'
-    },
-    bookingReference: {
-        type: String,
-        unique: true,
-        required: true
+        enum: ['upcoming', 'completed', 'cancelled', 'confirmed'],
+        default: 'confirmed'
     },
     createdAt: {
         type: Date,

@@ -9,6 +9,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { HorairesComponent } from './components/horaires/horaires.component';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { NewsDetailComponent } from './components/news/news-detail/news-detail.component';
 import { NewsListComponent } from './components/news/news-list/news-list.component';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'news', component: NewsListComponent },
   { path: 'news/:id', component: NewsDetailComponent },
   { path: '**', redirectTo: '' }  
